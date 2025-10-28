@@ -11,6 +11,7 @@ Aplicación Gradio para realizar inferencias sobre imágenes cargadas por el usu
 Carga el modelo y el escalador de temperatura.  
 Permite ajustar el umbral de decisión y la transparencia del Grad-CAM.  
 Muestra la imagen, el score calibrado y el mapa de calor superpuesto.  
+Debe de correrse todo el cuaderno de primero y luego se corre este archivo.
 
 ### chestaid.ipynb
 Cuaderno de trabajo con el pipeline de entrenamiento y evaluación.  
@@ -39,3 +40,21 @@ Metadatos del calibrador seleccionado (tipo de calibración y valores asociados)
 
 ---
 
+## Cómo correrlo
+
+Primero se deben ejecutar todos los bloques del cuaderno `chestaid.ipynb`, de principio a fin, para que se entrene el modelo y se guarden los pesos junto con los parámetros de calibración.
+
+Una vez completado ese paso, se puede correr la interfaz gráfica de **ChestAid**.  
+Para iniciarla, basta con ejecutar el siguiente comando en la terminal:
+
+```bash
+python chest_aid_app.py
+```
+Esto cargará el modelo, aplicará la calibración y permitirá realizar inferencias visuales con Grad-CAM.
+
+Como opción adicional, se puede ejecutar el script saliencyextra.py para validar cuantitativamente la saliencia.
+La ejecución está comentada dentro del mismo archivo y corresponde al siguiente comando:
+
+```bash
+python saliencyextra.py --weights chest_aid_densenet121.pth --test_dir ./test --out_dir ./saliency_metrics --t 1.171 --n_images 64 --deletion_fill blur --sufficiency_fill mean
+```
